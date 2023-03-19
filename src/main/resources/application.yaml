@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   h2:
     console:
@@ -8,3 +11,23 @@ spring:
     url: jdbc:h2:~/test
     username: sa
     password: sa
+
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        ddl-auto: create
+        dialect: org.hibernate.dialect.H2Dialect
+        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+api-server:
+  kakao-api-server-url: https://dapi.kakao.com
+
+secrets:
+  kakao-rest-api-key: b59375d0e881ccac07d04996b2496fd3
