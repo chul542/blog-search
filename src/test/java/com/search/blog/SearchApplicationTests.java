@@ -1,4 +1,4 @@
-package com.blog.search;
+package com.search.blog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
