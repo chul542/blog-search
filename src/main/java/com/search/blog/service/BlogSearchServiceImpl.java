@@ -6,6 +6,7 @@ import com.search.blog.dto.web.ApiCallDto.KakaoBlogSearchApiRes;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
 import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
 import com.search.blog.entity.BlogSearchHistoryEntity;
+import com.search.blog.exception.custom.PageLimitException;
 import com.search.blog.repository.BlogSearchRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

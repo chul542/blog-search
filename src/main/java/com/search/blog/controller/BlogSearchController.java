@@ -5,6 +5,7 @@ import static com.search.blog.config.MvcConfig.BLOG_SEARCH_URI;
 import com.search.blog.dto.service.BlogSearchServiceDto.BlogSearchGetReq;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
 import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
+import com.search.blog.exception.custom.PageLimitException;
 import com.search.blog.service.BlogSearchService;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -35,7 +36,7 @@ public class BlogSearchController {
           + "Allowed values are 'accuracy' and 'recency'.") String sort,
       @RequestParam(value = "page", required = false, defaultValue = "1") @Min(1) @Max(50) Integer page,
       @RequestParam(value = "size", required = false, defaultValue = "10") @Min(1) @Max(50) Integer size
-  ) {
+  ) throws PageLimitException {
     return blogSearchService.getBlogSearchList(BlogSearchGetReq
         .builder()
         .query(query)
@@ -46,7 +47,7 @@ public class BlogSearchController {
   }
 
   @GetMapping(path="/popular-keyword")
-  public TopTenKeywordRes getPopularKeword(
+  public TopTenKeywordRes getPopularKeword (
       @RequestParam(value = "size", required = false, defaultValue = "10") @Min(1) @Max(50) Integer size
   ) {
     return blogSearchService.getPopularKeywordList();
