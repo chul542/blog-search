@@ -14,13 +14,14 @@ spring:
 
   jpa:
     open-in-view: false
-    properties:
-      hibernate:
-        ddl-auto: create
-        dialect: org.hibernate.dialect.H2Dialect
-        show_sql: true
-        format_sql: true
-        default_batch_fetch_size: 100
+    database-platform: H2
+    show-sql: true
+    hibernate:
+        ddl-auto: update
+#        dialect: org.hibernate.dialect.H2Dialect
+#        show_sql: true
+#        format_sql: true
+#        default_batch_fetch_size: 100
 
   mvc:
     pathmatch:

@@ -4,6 +4,7 @@ import static com.search.blog.config.MvcConfig.BLOG_SEARCH_URI;
 
 import com.search.blog.dto.service.BlogSearchServiceDto.BlogSearchGetReq;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
+import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
 import com.search.blog.service.BlogSearchService;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -35,10 +36,6 @@ public class BlogSearchController {
       @RequestParam(value = "page", required = false, defaultValue = "1") @Min(1) @Max(50) Integer page,
       @RequestParam(value = "size", required = false, defaultValue = "10") @Min(1) @Max(50) Integer size
   ) {
-    System.out.println(query);
-    System.out.println(sort);
-    System.out.println(page);
-    System.out.println(size);
     return blogSearchService.getBlogSearchList(BlogSearchGetReq
         .builder()
         .query(query)
@@ -46,6 +43,13 @@ public class BlogSearchController {
         .page(page)
         .size(size)
         .build());
+  }
+
+  @GetMapping(path="/popular-keyword")
+  public TopTenKeywordRes getPopularKeword(
+      @RequestParam(value = "size", required = false, defaultValue = "10") @Min(1) @Max(50) Integer size
+  ) {
+    return blogSearchService.getPopularKeywordList();
   }
 
 }
