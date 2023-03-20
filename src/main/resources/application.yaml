@@ -29,6 +29,7 @@ spring:
 
 api-server:
   kakao-api-server-url: https://dapi.kakao.com
+  naver-api-server-url: https://openapi.naver.com
 
 secrets:
   kakao-rest-api-key: b59375d0e881ccac07d04996b2496fd3

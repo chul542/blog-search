@@ -13,10 +13,23 @@ public class WebClintConfig {
   @Value("${api-server.kakao-api-server-url}")
   private String KAKAO_API_SERVER;
 
+  @Value("${api-server.naver-api-server-url}")
+  private String NAVER_API_SERVER;
+
+
+
   @Bean
   public WebClient webClientToKakaoApiServer() {
     return WebClient.builder()
         .baseUrl(KAKAO_API_SERVER)
+        .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        .build();
+  }
+
+  @Bean
+  public WebClient webClientToNaverApiServer() {
+    return WebClient.builder()
+        .baseUrl(NAVER_API_SERVER)
         .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .build();
   }

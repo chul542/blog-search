@@ -1,9 +1,10 @@
 package com.search.blog.dto.web;
 
-import com.search.blog.dto.web.ApiCallDto.KakaoBlogSearchApiRes;
+import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResDocument;
+import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResMeta;
+import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchItem;
 import com.search.blog.entity.BlogSearchHistoryEntity;
 import com.search.blog.mapstruct.BlogSearchMapper;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
@@ -13,7 +14,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import org.springframework.data.domain.Slice;
-import reactor.core.publisher.Mono;
 
 public class BlogSearchWebDto {
 
@@ -23,26 +23,46 @@ public class BlogSearchWebDto {
 
 
   @Data
+  @Builder
   public static class BlogSearchWebRes {
-
-    public BlogSearchWebRes() {
-    }
 
     private BlogSearchMeta meta;
 
     private List<BlogSearchDocument> documents;
 
+    public static BlogSearchWebRes of(KakaoBlogSearchApiResMeta meta, Slice<KakaoBlogSearchApiResDocument> documents) {
+      int size = documents.getSize();
+      ListIterator<KakaoBlogSearchApiResDocument> it = documents.getContent().listIterator(size);
+      return BlogSearchWebRes.builder()
+          .meta(BlogSearchMeta.of(meta))
+          .documents(
+              Stream.generate(it::previous).limit(size)
+                  .map(BlogSearchDocument::of)
+                  .toList()
+          )
+          .build();
+    }
+
   }
 
 
   @Data
+  @Builder
   public static class BlogSearchMeta {
 
     private Integer total_count;
 
-    private Integer pageable_count;
+    private Integer start;
+
+    private Integer display;
+
+    private Integer page;
 
     private Boolean is_end;
+
+    public static BlogSearchMeta of(KakaoBlogSearchApiResMeta meta) {
+      return BlogSearchMapper.INSTANCE.mapToMeta(meta);
+    }
   }
 
 
@@ -60,6 +80,14 @@ public class BlogSearchWebDto {
     private String thumbnail;
 
     private String dateTime;
+
+    public static BlogSearchDocument of(KakaoBlogSearchApiResDocument document) {
+      return BlogSearchMapper.INSTANCE.mapKakaoToDocument(document);
+    }
+
+    public static BlogSearchDocument of(NaverBlogSearchItem item) {
+      return BlogSearchMapper.INSTANCE.mapNaverToDocument(item);
+    }
   }
 
 

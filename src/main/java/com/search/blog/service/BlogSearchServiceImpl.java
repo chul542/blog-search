@@ -1,14 +1,11 @@
 package com.search.blog.service;
 
 import com.search.blog.dto.service.BlogSearchServiceDto.BlogSearchGetReq;
-import com.search.blog.dto.web.ApiCallDto.KakaoBlogSearchApiReq;
-import com.search.blog.dto.web.ApiCallDto.KakaoBlogSearchApiRes;
+import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
 import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
 import com.search.blog.entity.BlogSearchHistoryEntity;
-import com.search.blog.exception.custom.PageLimitException;
 import com.search.blog.repository.BlogSearchRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -16,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor

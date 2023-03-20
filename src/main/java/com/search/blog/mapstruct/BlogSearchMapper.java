@@ -1,15 +1,15 @@
 package com.search.blog.mapstruct;
 
-import com.search.blog.dto.service.BlogSearchServiceDto.BlogSearchGetReq;
-import com.search.blog.dto.web.ApiCallDto.KakaoBlogSearchApiRes;
-import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
+import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchDocument;
+import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchMeta;
 import com.search.blog.dto.web.BlogSearchWebDto.KeywordInfo;
-import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
+import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResDocument;
+import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResMeta;
+import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchItem;
 import com.search.blog.entity.BlogSearchHistoryEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import reactor.core.publisher.Mono;
 
 @Mapper
 public interface BlogSearchMapper {
@@ -22,5 +22,26 @@ public interface BlogSearchMapper {
   // KakaoBlogSearchApiRes -> BlogSearchWebRes
 
   KeywordInfo toKeyTenKeyWord(BlogSearchHistoryEntity historyEntity);
+
+
+  @Mapping(target = "start", ignore = true)
+  @Mapping(target = "display", ignore = true)
+  @Mapping(target = "page", ignore = true)
+  BlogSearchMeta mapToMeta(KakaoBlogSearchApiResMeta meta);
+
+
+  BlogSearchDocument mapKakaoToDocument(KakaoBlogSearchApiResDocument document);
+
+  @Mapping(source = "title", target = "title")
+  @Mapping(source = "link", target = "url")
+  @Mapping(source = "description", target = "contents")
+  @Mapping(source = "bloggername", target = "blogname")
+  @Mapping(source = "postdate", target = "dateTime", dateFormat = "yyyyMMdd")
+  @Mapping(target = "thumbnail", ignore = true)
+  BlogSearchDocument mapNaverToDocument(NaverBlogSearchItem item);
+
+
+
+
 
 }

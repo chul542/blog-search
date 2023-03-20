@@ -4,9 +4,9 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
-public class ApiCallDto {
+public class KakaoBlogSearchApiDto {
 
-  private ApiCallDto() {
+  private KakaoBlogSearchApiDto() {
     throw new IllegalStateException("DTO instance is not allowed");
   }
 
@@ -23,7 +23,8 @@ public class ApiCallDto {
   @Getter
   public static class KakaoBlogSearchApiRes {
     private KakaoBlogSearchApiResMeta meta;
-    private List<KakaoBlogSearchApiResDocuments> documents;
+    private List<KakaoBlogSearchApiResDocument> documents;
+
   }
 
   @Builder
@@ -38,7 +39,7 @@ public class ApiCallDto {
 
   @Builder
   @Getter
-  public static class KakaoBlogSearchApiResDocuments {
+  public static class KakaoBlogSearchApiResDocument {
     private String title;
 
     private String contents;
