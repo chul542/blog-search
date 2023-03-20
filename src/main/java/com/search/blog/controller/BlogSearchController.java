@@ -21,6 +21,11 @@ public class BlogSearchController {
 
   private final BlogSearchService blogSearchService;
 
+  @GetMapping(path="/test")
+  public String testFunc() {
+    return "asdasdsa";
+  }
+
   @GetMapping()
   public BlogSearchWebRes getBlogSearchList(
       @RequestParam(value = "query") String query,
@@ -30,7 +35,17 @@ public class BlogSearchController {
       @RequestParam(value = "page", required = false, defaultValue = "1") @Min(1) @Max(50) Integer page,
       @RequestParam(value = "size", required = false, defaultValue = "10") @Min(1) @Max(50) Integer size
   ) {
-    return blogSearchService(BlogSearchGetReq.builder().query(query).sort(sort).page(page).size(size).build());
+    System.out.println(query);
+    System.out.println(sort);
+    System.out.println(page);
+    System.out.println(size);
+    return blogSearchService.getBlogSearchList(BlogSearchGetReq
+        .builder()
+        .query(query)
+        .sort(sort)
+        .page(page)
+        .size(size)
+        .build());
   }
 
 }
