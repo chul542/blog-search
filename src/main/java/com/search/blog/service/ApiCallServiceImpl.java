@@ -1,6 +1,7 @@
 package com.search.blog.service;
 
 import com.search.blog.dto.web.ApiCallDto.KakaoBlogSearchApiReq;
+import com.search.blog.dto.web.ApiCallDto.KakaoBlogSearchApiRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ApiCallServiceImpl implements ApiCallService {
   private String KAKAO_API_SERVER_URL;
 
   @Override
-  public Mono<String> getKakaoBlogSearchList(KakaoBlogSearchApiReq kakaoBlogSearchApiReq) {
+  public Mono<KakaoBlogSearchApiRes> getKakaoBlogSearchList(KakaoBlogSearchApiReq kakaoBlogSearchApiReq) {
 
     return webClient
         .get()
@@ -29,6 +30,6 @@ public class ApiCallServiceImpl implements ApiCallService {
                 .build()
         )
         .retrieve()
-        .bodyToMono(String.class);
+        .bodyToMono(KakaoBlogSearchApiRes.class);
   }
 }
