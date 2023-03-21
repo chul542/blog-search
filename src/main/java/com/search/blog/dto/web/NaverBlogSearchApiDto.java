@@ -2,6 +2,7 @@ package com.search.blog.dto.web;
 
 import java.util.List;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
 public class NaverBlogSearchApiDto {
@@ -10,8 +11,8 @@ public class NaverBlogSearchApiDto {
     throw new IllegalStateException("DTO instance is not allowed");
   }
 
-  @Builder
   @Getter
+  @Builder
   public static class NaverBlogSearchApiReq {
     private String query;
 
@@ -22,8 +23,7 @@ public class NaverBlogSearchApiDto {
     private String sort;
   }
 
-  @Builder
-  @Getter
+  @Data
   public static class NaverBlogSearchApiRes {
     private String lastBuildDate;
 
@@ -36,8 +36,7 @@ public class NaverBlogSearchApiDto {
     private List<NaverBlogSearchItem> items;
   }
 
-  @Getter
-  @Builder
+  @Data
   public static class NaverBlogSearchItem {
     private String title;
 

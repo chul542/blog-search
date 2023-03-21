@@ -2,6 +2,7 @@ package com.search.blog.dto.web;
 
 import java.util.List;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
 public class KakaoBlogSearchApiDto {
@@ -19,16 +20,16 @@ public class KakaoBlogSearchApiDto {
     private Integer size;
   }
 
-  @Builder
-  @Getter
+
+
+  @Data
   public static class KakaoBlogSearchApiRes {
     private KakaoBlogSearchApiResMeta meta;
     private List<KakaoBlogSearchApiResDocument> documents;
 
   }
 
-  @Builder
-  @Getter
+  @Data
   public static class KakaoBlogSearchApiResMeta {
     private Integer total_count;
 
@@ -37,8 +38,7 @@ public class KakaoBlogSearchApiDto {
     private Boolean is_end;
   }
 
-  @Builder
-  @Getter
+  @Data
   public static class KakaoBlogSearchApiResDocument {
     private String title;
 

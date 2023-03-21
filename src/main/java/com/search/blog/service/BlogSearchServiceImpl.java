@@ -4,6 +4,7 @@ import com.search.blog.dto.service.BlogSearchServiceDto.BlogSearchGetReq;
 import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
 import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
+import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
 import com.search.blog.entity.BlogSearchHistoryEntity;
 import com.search.blog.repository.BlogSearchRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,7 @@ public class BlogSearchServiceImpl implements BlogSearchService {
               .build());
     }
 
-    return getKakaoBlogSearchList(blogSearchGetReq);
+    return getNaverBlogSearchList(blogSearchGetReq);
   }
 
   public TopTenKeywordRes getPopularKeywordList() {
@@ -55,11 +56,23 @@ public class BlogSearchServiceImpl implements BlogSearchService {
   }
 
   private BlogSearchWebRes getKakaoBlogSearchList(BlogSearchGetReq blogSearchGetReq) {
-    return apiCallService.getKakaoBlogSearchList(KakaoBlogSearchApiReq.builder()
+    return apiCallService.getKakaoBlogSearchList(KakaoBlogSearchApiReq
+        .builder()
         .query(blogSearchGetReq.getQuery())
         .sort(blogSearchGetReq.getSort())
         .page(blogSearchGetReq.getPage())
         .size(blogSearchGetReq.getSize())
         .build());
+  }
+
+  private BlogSearchWebRes getNaverBlogSearchList(BlogSearchGetReq blogSearchGetReq) {
+    return apiCallService.getNaverBlogSearchList(NaverBlogSearchApiReq
+        .builder()
+        .query(blogSearchGetReq.getQuery())
+        .display(blogSearchGetReq.getSize())
+        .start(blogSearchGetReq.getPage() * blogSearchGetReq.getSize())
+        .sort(blogSearchGetReq.getSort())
+        .build()
+    );
   }
 }

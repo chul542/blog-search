@@ -1,5 +1,7 @@
 package com.search.blog.dto.web;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResDocument;
 import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResMeta;
 import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchItem;
@@ -13,6 +15,7 @@ import java.util.stream.Stream;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Slice;
 
 public class BlogSearchWebDto {
@@ -30,15 +33,11 @@ public class BlogSearchWebDto {
 
     private List<BlogSearchDocument> documents;
 
-    public static BlogSearchWebRes of(KakaoBlogSearchApiResMeta meta, Slice<KakaoBlogSearchApiResDocument> documents) {
-      int size = documents.getSize();
-      ListIterator<KakaoBlogSearchApiResDocument> it = documents.getContent().listIterator(size);
+    public static BlogSearchWebRes of(KakaoBlogSearchApiResMeta meta, List<KakaoBlogSearchApiResDocument> documents) {
       return BlogSearchWebRes.builder()
           .meta(BlogSearchMeta.of(meta))
           .documents(
-              Stream.generate(it::previous).limit(size)
-                  .map(BlogSearchDocument::of)
-                  .toList()
+              documents.stream().map(BlogSearchDocument::of).toList()
           )
           .build();
     }
@@ -67,6 +66,7 @@ public class BlogSearchWebDto {
 
 
   @Data
+  @JsonInclude(Include.NON_NULL)
   public static class BlogSearchDocument {
 
     private String title;

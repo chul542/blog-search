@@ -5,13 +5,13 @@ import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchMeta;
 import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
 import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiRes;
-import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResDocument;
 import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
 import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchApiRes;
 import com.search.blog.exception.custom.PageLimitException;
 import com.search.blog.mapstruct.BlogSearchMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Slice;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -21,6 +21,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ApiCallServiceImpl implements ApiCallService {
 
   private final WebClient webClientToKakaoApiServer;
+  private final WebClient webClientToNaverApiServer;
 
   @Override
   public BlogSearchWebRes getKakaoBlogSearchList(KakaoBlogSearchApiReq kakaoBlogSearchApiReq) {
@@ -41,20 +42,32 @@ public class ApiCallServiceImpl implements ApiCallService {
         .bodyToMono(KakaoBlogSearchApiRes.class)
         .block();
 
-    return BlogSearchWebRes.of(kakaoBlogSearchApiRes.getMeta(),
-        (Slice<KakaoBlogSearchApiResDocument>) kakaoBlogSearchApiRes.getDocuments());
-
+    return BlogSearchWebRes
+        .builder()
+        .meta(
+            BlogSearchMeta
+                .builder()
+                .total_count(kakaoBlogSearchApiRes.getMeta().getTotal_count())
+                .start(kakaoBlogSearchApiReq.getPage() * kakaoBlogSearchApiReq.getSize())
+                .display(kakaoBlogSearchApiReq.getSize())
+                .page(kakaoBlogSearchApiReq.getPage())
+                .is_end(kakaoBlogSearchApiRes.getMeta().getIs_end())
+                .build())
+        .documents(
+            kakaoBlogSearchApiRes.getDocuments().stream().map(BlogSearchDocument::of).toList())
+        .build();
   }
 
   @Override
   public BlogSearchWebRes getNaverBlogSearchList(NaverBlogSearchApiReq naverBlogSearchApiReq) {
-    NaverBlogSearchApiRes naverBlogSearchApiRes = webClientToKakaoApiServer
+
+    NaverBlogSearchApiRes naverBlogSearchApiRes = webClientToNaverApiServer
         .get()
         .uri(uriBuilder -> uriBuilder.path("/v1/search/blog.json")
             .queryParam("query", naverBlogSearchApiReq.getQuery())
             .queryParam("display", naverBlogSearchApiReq.getDisplay())
             .queryParam("start", naverBlogSearchApiReq.getStart())
-            .queryParam("sort", naverBlogSearchApiReq.getSort())
+            .queryParam("sort", "date")
             .build()
         )
         .header("X-Naver-Client-Id", "rNyjEScrdlU5n8Y_QnBR")
@@ -66,11 +79,15 @@ public class ApiCallServiceImpl implements ApiCallService {
         .bodyToMono(NaverBlogSearchApiRes.class)
         .block();
 
+    Boolean isEnd = naverBlogSearchApiReq.getStart() + naverBlogSearchApiReq.getDisplay()
+        > naverBlogSearchApiRes.getTotal();
+
     return BlogSearchWebRes.builder()
         .meta(BlogSearchMeta.builder().total_count(naverBlogSearchApiRes.getTotal())
             .start(naverBlogSearchApiReq.getStart())
             .display(naverBlogSearchApiReq.getDisplay())
-            .page(naverBlogSearchApiRes.getStart() / naverBlogSearchApiReq.getDisplay()).build())
+            .page(naverBlogSearchApiRes.getStart() / naverBlogSearchApiReq.getDisplay())
+            .is_end(isEnd).build())
         .documents(
             naverBlogSearchApiRes.getItems().stream()
                 .map(BlogSearchMapper.INSTANCE::mapNaverToDocument)
