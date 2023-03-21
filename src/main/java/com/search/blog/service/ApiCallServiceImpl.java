@@ -65,7 +65,7 @@ public class ApiCallServiceImpl implements ApiCallService {
             .queryParam("query", naverBlogSearchApiReq.getQuery())
             .queryParam("display", naverBlogSearchApiReq.getDisplay())
             .queryParam("start", naverBlogSearchApiReq.getStart())
-            .queryParam("sort", "date")
+            .queryParam("sort", naverBlogSearchApiReq.getSort())
             .build()
         )
         .header("X-Naver-Client-Id", "rNyjEScrdlU5n8Y_QnBR")

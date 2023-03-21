@@ -9,6 +9,6 @@ public interface BlogSearchService {
 
   BlogSearchWebRes getBlogSearchList(BlogSearchGetReq blogSearchGetReq);
 
-  TopTenKeywordRes getPopularKeywordList();
+  TopTenKeywordRes getPopularKeywordList(int size);
 
 }

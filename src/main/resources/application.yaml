@@ -18,14 +18,20 @@ spring:
     show-sql: true
     hibernate:
         ddl-auto: update
-#        dialect: org.hibernate.dialect.H2Dialect
-#        show_sql: true
-#        format_sql: true
-#        default_batch_fetch_size: 100
 
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    root: info
+    org:
+      hibernate:
+        SQL: info
+        type:
+          descriptor:
+            sql: info
 
 api-server:
   kakao-api-server-url: https://dapi.kakao.com

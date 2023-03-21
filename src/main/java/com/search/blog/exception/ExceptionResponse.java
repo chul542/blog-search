@@ -1,7 +1,7 @@
 package com.search.blog.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.search.blog.exception.custom.CustomException;
+import com.search.blog.exception.custom.BlogSearchException;
 import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
@@ -69,7 +69,7 @@ public class ExceptionResponse {
     return new ExceptionResponse(ExceptionCode.INVALID_INPUT_VALUE, request.getRequestURI(), ex.getMessage());
   }
 
-  public static ExceptionResponse of(CustomException ex, HttpServletRequest request) {
+  public static ExceptionResponse of(BlogSearchException ex, HttpServletRequest request) {
     return new ExceptionResponse(ex.getErrorCode(), request.getRequestURI(), ex.getMessage());
   }
 

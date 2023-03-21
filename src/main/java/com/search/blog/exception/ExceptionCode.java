@@ -13,7 +13,8 @@ public enum ExceptionCode {
   METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "E002", "Method Not Allowed"),
   INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "E003", "Invalid Input Value"),
   // Custom Exception
-  PAGE_LIMIT_EXCESS(HttpStatus.BAD_REQUEST, "B001", "Requested Page Is More Than Max");
+  PAGE_LIMIT_EXCESS(HttpStatus.BAD_REQUEST, "B001", "Requested Page Is More Than Max"),
+  ALL_API_SERVER_EXCEPTION(HttpStatus.NOT_ACCEPTABLE, "B002", "All Blog Api Server Returns The Exception");
 
   private final HttpStatus status;
   private final String code;

@@ -27,4 +27,8 @@ public class BlogSearchException extends RuntimeException {
     this.exceptionCode = exceptionCode;
   }
 
+  public ExceptionCode getErrorCode() {
+    return this.exceptionCode;
+  }
+
 }

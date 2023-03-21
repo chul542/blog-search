@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Slice;
 
 public class BlogSearchWebDto {
