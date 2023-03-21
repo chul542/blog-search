@@ -45,7 +45,12 @@ public class BlogSearchServiceImpl implements BlogSearchService {
               .build());
     }
 
-    return getNaverBlogSearchList(blogSearchGetReq);
+    try {
+      return getKakaoBlogSearchList(blogSearchGetReq);
+    } catch (Exception e) {
+      return getNaverBlogSearchList(blogSearchGetReq);
+    }
+
   }
 
   public TopTenKeywordRes getPopularKeywordList() {

@@ -10,8 +10,6 @@ import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchApiRes;
 import com.search.blog.exception.custom.PageLimitException;
 import com.search.blog.mapstruct.BlogSearchMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

@@ -7,6 +7,8 @@ import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
 import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
 import com.search.blog.exception.custom.PageLimitException;
 import com.search.blog.service.BlogSearchService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -23,11 +25,13 @@ public class BlogSearchController {
 
   private final BlogSearchService blogSearchService;
 
-  @GetMapping(path="/test")
+  @ApiOperation(value = "Ping-Pong Api", notes = "This is server test api")
+  @GetMapping(path = "/test")
   public String testFunc() {
-    return "asdasdsa";
+    return "Ping! Pong!";
   }
 
+  @ApiOperation(value = "Search Blog Using Keyword", notes = "It returns the blog information from the Kakao Api server. If it triggers the error, it returns the result from the Naver Api server.")
   @GetMapping()
   public BlogSearchWebRes getBlogSearchList(
       @RequestParam(value = "query") String query,
@@ -46,8 +50,9 @@ public class BlogSearchController {
         .build());
   }
 
-  @GetMapping(path="/popular-keyword")
-  public TopTenKeywordRes getPopularKeword (
+  @Operation(summary = "Popular Keyword")
+  @GetMapping(path = "/popular-keyword")
+  public TopTenKeywordRes getPopularKeword(
       @RequestParam(value = "size", required = false, defaultValue = "10") @Min(1) @Max(50) Integer size
   ) {
     return blogSearchService.getPopularKeywordList();

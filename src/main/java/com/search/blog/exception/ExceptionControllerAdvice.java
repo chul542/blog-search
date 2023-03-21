@@ -1,6 +1,7 @@
 package com.search.blog.exception;
 
 import com.search.blog.exception.custom.BlogSearchException;
+import io.swagger.v3.oas.annotations.Hidden;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
