@@ -8,6 +8,12 @@ group = 'com.blog'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -43,9 +49,6 @@ dependencies {
 
     // WebClient
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
-    // Validater
-    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
 
     // Swagger
     implementation 'io.springfox:springfox-boot-starter:3.0.0'

@@ -13,6 +13,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,8 +43,8 @@ public class BlogSearchController {
       @RequestParam(value = "query", required = true)
           @NotNull(message = "Search query must not be null")
           String query,
-      @Email
       @RequestParam(value = "sort", required = false, defaultValue = "accuracy")
+      @Pattern(regexp = "^(accuracy|recency|\\s*)$", message = "For `sort`, only three options are allowed 'accuracy', 'recency', or null")
           String sort,
       @RequestParam(value = "page", required = false, defaultValue = "1")
       @Min(value = 1, message = "page must be grater than or equal to 1")
