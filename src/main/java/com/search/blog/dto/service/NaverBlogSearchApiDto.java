@@ -1,4 +1,4 @@
-package com.search.blog.dto.web;
+package com.search.blog.dto.service;
 
 import com.search.blog.exception.custom.DtoInstanceCreateException;
 import java.util.List;

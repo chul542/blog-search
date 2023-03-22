@@ -6,11 +6,11 @@ import static com.search.blog.config.MvcConfig.X_NAVER_CLINET_SECRET;
 
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchDocument;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchMeta;
-import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
+import com.search.blog.dto.service.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
-import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiRes;
-import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
-import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchApiRes;
+import com.search.blog.dto.service.KakaoBlogSearchApiDto.KakaoBlogSearchApiRes;
+import com.search.blog.dto.service.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
+import com.search.blog.dto.service.NaverBlogSearchApiDto.NaverBlogSearchApiRes;
 import com.search.blog.exception.custom.PageLimitException;
 import com.search.blog.mapstruct.BlogSearchMapper;
 import lombok.RequiredArgsConstructor;

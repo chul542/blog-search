@@ -1,10 +1,10 @@
 package com.search.blog.service;
 
 import com.search.blog.dto.service.BlogSearchServiceDto.BlogSearchGetReq;
-import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
+import com.search.blog.dto.service.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
 import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
-import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
+import com.search.blog.dto.service.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
 import com.search.blog.entity.BlogSearchHistoryEntity;
 import com.search.blog.exception.custom.ExternalApiServerException;
 import com.search.blog.repository.BlogSearchRepository;

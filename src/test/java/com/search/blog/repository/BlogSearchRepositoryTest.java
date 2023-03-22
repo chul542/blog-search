@@ -17,13 +17,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 @Slf4j
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class BlogSearchRepositoryTest {
+class BlogSearchRepositoryTest {
 
   @Autowired
   private BlogSearchRepository blogSearchRepository;
 
   @Test
-  @DisplayName("BlogSearchRepositoryTest.saveAndFind()")
+  @DisplayName("BlogSearchRepository Test - saveAndFind()")
   void saveAndFindTest() {
 
     String keyword = "Developer";

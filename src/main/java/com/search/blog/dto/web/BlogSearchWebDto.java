@@ -2,9 +2,9 @@ package com.search.blog.dto.web;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResDocument;
-import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResMeta;
-import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchItem;
+import com.search.blog.dto.service.KakaoBlogSearchApiDto.KakaoBlogSearchApiResDocument;
+import com.search.blog.dto.service.KakaoBlogSearchApiDto.KakaoBlogSearchApiResMeta;
+import com.search.blog.dto.service.NaverBlogSearchApiDto.NaverBlogSearchItem;
 import com.search.blog.entity.BlogSearchHistoryEntity;
 import com.search.blog.exception.custom.DtoInstanceCreateException;
 import com.search.blog.mapstruct.BlogSearchMapper;

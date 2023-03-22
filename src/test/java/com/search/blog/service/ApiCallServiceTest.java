@@ -1,9 +1,9 @@
 package com.search.blog.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
-import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
-import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
-import org.junit.jupiter.api.Assertions;
+import com.search.blog.dto.service.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
+import com.search.blog.dto.service.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ class ApiCallServiceTest {
             KakaoBlogSearchApiReq.builder().query("develop").sort("accuracy")
                 .page(10).size(10).build()
         );
-    Assertions.assertEquals(blogSearchWebRes.getMeta().getPage(), 10);
+    assertThat(blogSearchWebRes.getMeta().getPage()).isEqualTo(10);
   }
 
   @Test
@@ -34,7 +34,7 @@ class ApiCallServiceTest {
             NaverBlogSearchApiReq.builder().query("develop").sort("date")
                 .start(1).display(10).build()
         );
-    Assertions.assertEquals(blogSearchWebRes.getMeta().getDisplay(), 10);
+    assertThat(blogSearchWebRes.getMeta().getDisplay()).isEqualTo(10);
 
   }
 

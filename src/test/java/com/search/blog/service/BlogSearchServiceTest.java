@@ -1,46 +1,48 @@
 package com.search.blog.service;
 
-import static org.mockito.BDDMockito.given;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import com.search.blog.entity.BlogSearchHistoryEntity;
+import com.search.blog.dto.service.BlogSearchServiceDto.BlogSearchGetReq;
+import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
+import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
 import com.search.blog.repository.BlogSearchRepository;
-import java.util.ArrayList;
-import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@ExtendWith(SpringExtension.class)
+@SpringBootTest
 class BlogSearchServiceTest {
 
-  @Mock
+  @Autowired
   BlogSearchRepository blogSearchRepository;
 
-  @InjectMocks
-  private BlogSearchServiceImpl blogSearchServiceImpl;
+  @Autowired
+  private BlogSearchService blogSearchService;
+
 
   @Test
-  @DisplayName("service test")
-  void getPopularKeywordListTest() {
-    BlogSearchHistoryEntity blogSearchHistoryEntity =
-        BlogSearchHistoryEntity
-            .builder()
-            .keyword("develop")
-            .numberOfSearch(20L)
-            .build();
+  @DisplayName("Blog Search Service Test")
+  void getBlogSearchListTest() {
 
-    List<BlogSearchHistoryEntity> entities = new ArrayList<>();
-    entities.add(blogSearchHistoryEntity);
+    BlogSearchWebRes blogSearchWebRes = blogSearchService.getBlogSearchList(BlogSearchGetReq.
+        builder()
+        .query("develop")
+        .size(10)
+        .page(10)
+        .sort("accuracy")
+        .build()
+    );
+    assertThat(blogSearchWebRes.getDocuments()).hasSize(10);
 
-    given(blogSearchRepository.findAll()).willReturn(entities);
-
-    List<BlogSearchHistoryEntity> findEntities = blogSearchRepository.findAll();
-    Assertions.assertEquals(blogSearchHistoryEntity.getKeyword(), findEntities.get(0).getKeyword());
   }
 
+  @Test
+  @DisplayName("Popular Keyword Service Test")
+  void getPopularKeywordListTest() {
 
+    TopTenKeywordRes topTenKeywordRes = blogSearchService.getPopularKeywordList(1);
+    assertThat(topTenKeywordRes.getKeywordList()).hasSize(1);
+
+  }
 }
