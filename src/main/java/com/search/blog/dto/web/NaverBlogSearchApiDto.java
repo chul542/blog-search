@@ -1,5 +1,6 @@
 package com.search.blog.dto.web;
 
+import com.search.blog.exception.custom.DtoInstanceCreateException;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
@@ -7,13 +8,14 @@ import lombok.Getter;
 
 public class NaverBlogSearchApiDto {
 
-  private NaverBlogSearchApiDto () {
-    throw new IllegalStateException("DTO instance is not allowed");
+  private NaverBlogSearchApiDto() {
+    throw new DtoInstanceCreateException();
   }
 
   @Getter
   @Builder
   public static class NaverBlogSearchApiReq {
+
     private String query;
 
     private Integer display;
@@ -25,6 +27,7 @@ public class NaverBlogSearchApiDto {
 
   @Data
   public static class NaverBlogSearchApiRes {
+
     private String lastBuildDate;
 
     private Integer total;
@@ -38,6 +41,7 @@ public class NaverBlogSearchApiDto {
 
   @Data
   public static class NaverBlogSearchItem {
+
     private String title;
 
     private String link;
@@ -50,6 +54,4 @@ public class NaverBlogSearchApiDto {
 
     private String postdate;
   }
-
-
 }

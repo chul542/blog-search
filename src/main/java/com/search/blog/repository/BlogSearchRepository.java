@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BlogSearchRepository extends JpaRepository<BlogSearchHistoryEntity, String> {
 
-
 }

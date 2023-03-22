@@ -1,5 +1,6 @@
 package com.search.blog.dto.web;
 
+import com.search.blog.exception.custom.DtoInstanceCreateException;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
@@ -8,15 +9,19 @@ import lombok.Getter;
 public class KakaoBlogSearchApiDto {
 
   private KakaoBlogSearchApiDto() {
-    throw new IllegalStateException("DTO instance is not allowed");
+    throw new DtoInstanceCreateException();
   }
 
   @Builder
   @Getter
   public static class KakaoBlogSearchApiReq {
+
     private String query;
+
     private String sort;
+
     private Integer page;
+
     private Integer size;
   }
 
@@ -24,13 +29,15 @@ public class KakaoBlogSearchApiDto {
 
   @Data
   public static class KakaoBlogSearchApiRes {
-    private KakaoBlogSearchApiResMeta meta;
-    private List<KakaoBlogSearchApiResDocument> documents;
 
+    private KakaoBlogSearchApiResMeta meta;
+
+    private List<KakaoBlogSearchApiResDocument> documents;
   }
 
   @Data
   public static class KakaoBlogSearchApiResMeta {
+
     private Integer total_count;
 
     private Integer pageable_count;
@@ -40,6 +47,7 @@ public class KakaoBlogSearchApiDto {
 
   @Data
   public static class KakaoBlogSearchApiResDocument {
+
     private String title;
 
     private String contents;
@@ -52,5 +60,4 @@ public class KakaoBlogSearchApiDto {
 
     private String dateTime;
   }
-
 }

@@ -4,7 +4,7 @@ import com.search.blog.exception.ExceptionCode;
 import lombok.Getter;
 
 @Getter
-public class PageLimitException extends BlogSearchException {
+public class PageLimitException extends BlogSearchRunTimeException {
 
   public PageLimitException() {
     super(ExceptionCode.PAGE_LIMIT_EXCESS);

@@ -1,14 +1,15 @@
 package com.search.blog.dto.service;
 
-import javax.validation.constraints.AssertTrue;
+import com.search.blog.exception.custom.DtoInstanceCreateException;
 import lombok.Builder;
 import lombok.Getter;
 
 public class BlogSearchServiceDto {
 
   private BlogSearchServiceDto()  {
-    throw new IllegalStateException("DTO instance is not allowed");
+    throw new DtoInstanceCreateException();
   }
+
   @Builder
   @Getter
   public static class BlogSearchGetReq {
@@ -20,11 +21,5 @@ public class BlogSearchServiceDto {
     private Integer page;
 
     private Integer size;
-
-//    @AssertTrue(message = "'sort' should be either ")
-//    public boolean isSortValid() {
-//      return sort.equals("accuracy") || sort.equals("recency");
-//    }
-
   }
 }

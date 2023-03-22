@@ -4,25 +4,25 @@ import com.search.blog.exception.ExceptionCode;
 import lombok.Getter;
 
 @Getter
-public class BlogSearchException extends RuntimeException {
+public class BlogSearchRunTimeException extends RuntimeException {
   private ExceptionCode exceptionCode;
 
-  public BlogSearchException(ExceptionCode exceptionCode, String message, Throwable cause) {
+  public BlogSearchRunTimeException(ExceptionCode exceptionCode, String message, Throwable cause) {
     super(message, cause);
     this.exceptionCode = exceptionCode;
   }
 
-  public BlogSearchException(ExceptionCode exceptionCode, String message) {
+  public BlogSearchRunTimeException(ExceptionCode exceptionCode, String message) {
     super(message);
     this.exceptionCode = exceptionCode;
   }
 
-  public BlogSearchException(ExceptionCode exceptionCode, Throwable cause) {
+  public BlogSearchRunTimeException(ExceptionCode exceptionCode, Throwable cause) {
     super(cause);
     this.exceptionCode = exceptionCode;
   }
 
-  public BlogSearchException(ExceptionCode exceptionCode) {
+  public BlogSearchRunTimeException(ExceptionCode exceptionCode) {
     super(exceptionCode.getMessage());
     this.exceptionCode = exceptionCode;
   }

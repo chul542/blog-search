@@ -6,12 +6,10 @@ import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
 import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
 import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
 import com.search.blog.entity.BlogSearchHistoryEntity;
-import com.search.blog.exception.custom.AllApiServerException;
+import com.search.blog.exception.custom.ExternalApiServerException;
 import com.search.blog.repository.BlogSearchRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
@@ -54,15 +52,15 @@ public class BlogSearchServiceImpl implements BlogSearchService {
     try {
       return getKakaoBlogSearchList(blogSearchGetReq);
     } catch (Exception e) {
-      log.info("Kakao Api Server makes error. Naver Api Server will handle the job.");
+      log.info("Kakao Api Server returns error. Naver Api Server will handle the job.");
     }
     try {
       return getNaverBlogSearchList(blogSearchGetReq);
     } catch (Exception e) {
-      log.info("Naver Api Server makes error.");
+      log.info("Naver Api Server returns error.");
     }
 
-    throw new AllApiServerException();
+    throw new ExternalApiServerException();
   }
 
   public TopTenKeywordRes getPopularKeywordList(int size) {

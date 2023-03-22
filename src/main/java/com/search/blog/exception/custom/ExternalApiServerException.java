@@ -2,9 +2,9 @@ package com.search.blog.exception.custom;
 
 import com.search.blog.exception.ExceptionCode;
 
-public class AllApiServerException extends BlogSearchException {
+public class ExternalApiServerException extends BlogSearchRunTimeException {
 
-  public AllApiServerException() {
+  public ExternalApiServerException() {
 
     super(ExceptionCode.ALL_API_SERVER_EXCEPTION);
   }

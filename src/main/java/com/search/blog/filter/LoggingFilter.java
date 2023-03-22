@@ -24,11 +24,6 @@ import org.springframework.web.util.WebUtils;
 public class LoggingFilter implements Filter {
 
   @Override
-  public void init(FilterConfig config) throws ServletException {
-    String FilterParam = config.getInitParameter("FilterParam");
-  }
-
-  @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
     ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(

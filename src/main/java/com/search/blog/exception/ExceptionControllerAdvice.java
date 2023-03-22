@@ -1,7 +1,6 @@
 package com.search.blog.exception;
 
-import com.search.blog.exception.custom.BlogSearchException;
-import io.swagger.v3.oas.annotations.Hidden;
+import com.search.blog.exception.custom.BlogSearchRunTimeException;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
@@ -61,8 +60,8 @@ public class ExceptionControllerAdvice {
   /**
    * Wapl 비지니스 로직에서 발생시킨 모든 예외 처리
    */
-  @ExceptionHandler(BlogSearchException.class)
-  protected ResponseEntity<ExceptionResponse> handleBusinessException(BlogSearchException ex, HttpServletRequest request) {
+  @ExceptionHandler(BlogSearchRunTimeException.class)
+  protected ResponseEntity<ExceptionResponse> handleBusinessException(BlogSearchRunTimeException ex, HttpServletRequest request) {
     ExceptionResponse response = ExceptionResponse.of(ex.getExceptionCode(), request);
 
     return ResponseEntity

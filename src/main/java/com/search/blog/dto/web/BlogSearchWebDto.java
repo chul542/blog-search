@@ -6,6 +6,7 @@ import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResDocume
 import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiResMeta;
 import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchItem;
 import com.search.blog.entity.BlogSearchHistoryEntity;
+import com.search.blog.exception.custom.DtoInstanceCreateException;
 import com.search.blog.mapstruct.BlogSearchMapper;
 import java.util.Collections;
 import java.util.List;
@@ -20,9 +21,8 @@ import org.springframework.data.domain.Slice;
 public class BlogSearchWebDto {
 
   private BlogSearchWebDto() {
-    throw new IllegalStateException("DTO instance is not allowed");
+    throw new DtoInstanceCreateException();
   }
-
 
   @Data
   @Builder
@@ -40,7 +40,6 @@ public class BlogSearchWebDto {
           )
           .build();
     }
-
   }
 
 
@@ -130,5 +129,4 @@ public class BlogSearchWebDto {
       return BlogSearchMapper.INSTANCE.toKeyTenKeyWord(historyEntity);
     }
   }
-
 }
