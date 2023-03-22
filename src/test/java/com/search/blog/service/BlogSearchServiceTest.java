@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.search.blog.dto.service.BlogSearchServiceDto.BlogSearchGetReq;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
-import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
+import com.search.blog.dto.web.BlogSearchWebDto.PopularKeywordRes;
 import com.search.blog.repository.BlogSearchRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,8 +41,8 @@ class BlogSearchServiceTest {
   @DisplayName("Popular Keyword Service Test")
   void getPopularKeywordListTest() {
 
-    TopTenKeywordRes topTenKeywordRes = blogSearchService.getPopularKeywordList(1);
-    assertThat(topTenKeywordRes.getKeywordList()).hasSize(1);
+    PopularKeywordRes popularKeywordRes = blogSearchService.getPopularKeywordList(1);
+    assertThat(popularKeywordRes.getKeywordList()).hasSize(1);
 
   }
 }

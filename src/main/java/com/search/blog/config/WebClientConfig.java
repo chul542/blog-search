@@ -11,17 +11,17 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
 
   @Value("${api-server.kakao-api-server-url}")
-  private String KAKAO_API_SERVER;
+  private String kakaoApiServer;
 
   @Value("${api-server.naver-api-server-url}")
-  private String NAVER_API_SERVER;
+  private String naverApiServer;
 
 
 
   @Bean
   public WebClient webClientToKakaoApiServer() {
     return WebClient.builder()
-        .baseUrl(KAKAO_API_SERVER)
+        .baseUrl(kakaoApiServer)
         .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .build();
   }
@@ -29,7 +29,7 @@ public class WebClientConfig {
   @Bean
   public WebClient webClientToNaverApiServer() {
     return WebClient.builder()
-        .baseUrl(NAVER_API_SERVER)
+        .baseUrl(naverApiServer)
         .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .build();
   }

@@ -3,7 +3,7 @@ package com.search.blog.service;
 import com.search.blog.dto.service.BlogSearchServiceDto.BlogSearchGetReq;
 import com.search.blog.dto.service.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchWebRes;
-import com.search.blog.dto.web.BlogSearchWebDto.TopTenKeywordRes;
+import com.search.blog.dto.web.BlogSearchWebDto.PopularKeywordRes;
 import com.search.blog.dto.service.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
 import com.search.blog.entity.BlogSearchHistoryEntity;
 import com.search.blog.exception.custom.ExternalApiServerException;
@@ -63,11 +63,11 @@ public class BlogSearchServiceImpl implements BlogSearchService {
     throw new ExternalApiServerException();
   }
 
-  public TopTenKeywordRes getPopularKeywordList(int size) {
+  public PopularKeywordRes getPopularKeywordList(int size) {
     int minSize = (int) Math.min(size, blogSearchRepository.count());
     Slice<BlogSearchHistoryEntity> searchHistoryEntities = blogSearchRepository.findAll(
         PageRequest.of(0, minSize, Sort.by(Direction.DESC, "numberOfSearch")));
-    return TopTenKeywordRes.of(searchHistoryEntities);
+    return PopularKeywordRes.of(searchHistoryEntities);
   }
 
   private BlogSearchWebRes getKakaoBlogSearchList(BlogSearchGetReq blogSearchGetReq) {

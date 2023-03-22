@@ -4,6 +4,7 @@ import static com.search.blog.config.MvcConfig.AUTHORIZATION;
 import static com.search.blog.config.MvcConfig.X_NAVER_CLIENT_ID;
 import static com.search.blog.config.MvcConfig.X_NAVER_CLINET_SECRET;
 
+import com.search.blog.config.ServerNameEnum;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchDocument;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchMeta;
 import com.search.blog.dto.service.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
@@ -13,6 +14,7 @@ import com.search.blog.dto.service.NaverBlogSearchApiDto.NaverBlogSearchApiReq;
 import com.search.blog.dto.service.NaverBlogSearchApiDto.NaverBlogSearchApiRes;
 import com.search.blog.exception.custom.PageLimitException;
 import com.search.blog.mapstruct.BlogSearchMapper;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -24,13 +26,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ApiCallServiceImpl implements ApiCallService {
 
   @Value("${secrets.kakao-rest-api-key}")
-  private String KAKAO_REST_API_KEY;
+  private String kakaoRestApiKey;
 
   @Value("${secrets.x-naver-client-id-key}")
-  private String X_NAVER_CLINET_ID_KEY;
+  private String xNaverClinetIdKey;
 
   @Value("${secrets.x-naver-client-secret-key}")
-  private String X_NAVER_CLINET_SECRET_KEY;
+  private String xNaverClientSecretKey;
 
   private final WebClient webClientToKakaoApiServer;
   private final WebClient webClientToNaverApiServer;
@@ -46,7 +48,7 @@ public class ApiCallServiceImpl implements ApiCallService {
             .queryParam("size", kakaoBlogSearchApiReq.getSize())
             .build()
         )
-        .header(AUTHORIZATION, KAKAO_REST_API_KEY)
+        .header(AUTHORIZATION, kakaoRestApiKey)
         .retrieve()
         .bodyToMono(KakaoBlogSearchApiRes.class)
         .block();
@@ -56,11 +58,12 @@ public class ApiCallServiceImpl implements ApiCallService {
         .meta(
             BlogSearchMeta
                 .builder()
-                .total_count(kakaoBlogSearchApiRes.getMeta().getTotal_count())
+                .total_count(Objects.requireNonNull(kakaoBlogSearchApiRes).getMeta().getTotal_count())
                 .start(kakaoBlogSearchApiReq.getPage() * kakaoBlogSearchApiReq.getSize())
                 .display(kakaoBlogSearchApiReq.getSize())
                 .page(kakaoBlogSearchApiReq.getPage())
                 .is_end(kakaoBlogSearchApiRes.getMeta().getIs_end())
+                .search_source(String.valueOf(ServerNameEnum.KAKAO_API_SERVER))
                 .build())
         .documents(
             kakaoBlogSearchApiRes.getDocuments().stream().map(BlogSearchDocument::of).toList())
@@ -79,8 +82,8 @@ public class ApiCallServiceImpl implements ApiCallService {
             .queryParam("sort", naverBlogSearchApiReq.getSort())
             .build()
         )
-        .header(X_NAVER_CLIENT_ID, X_NAVER_CLINET_ID_KEY)
-        .header(X_NAVER_CLINET_SECRET, X_NAVER_CLINET_SECRET_KEY)
+        .header(X_NAVER_CLIENT_ID, xNaverClinetIdKey)
+        .header(X_NAVER_CLINET_SECRET, xNaverClientSecretKey)
         .retrieve()
         .onStatus(HttpStatus::is4xxClientError, clientResponse -> {
           throw new PageLimitException();
@@ -89,14 +92,16 @@ public class ApiCallServiceImpl implements ApiCallService {
         .block();
 
     Boolean isEnd = naverBlogSearchApiReq.getStart() + naverBlogSearchApiReq.getDisplay()
-        > naverBlogSearchApiRes.getTotal();
+        > Objects.requireNonNull(naverBlogSearchApiRes).getTotal();
 
     return BlogSearchWebRes.builder()
         .meta(BlogSearchMeta.builder().total_count(naverBlogSearchApiRes.getTotal())
             .start(naverBlogSearchApiReq.getStart())
             .display(naverBlogSearchApiReq.getDisplay())
             .page(naverBlogSearchApiRes.getStart() / naverBlogSearchApiReq.getDisplay())
-            .is_end(isEnd).build())
+            .is_end(isEnd)
+            .search_source(String.valueOf(ServerNameEnum.NAVER_API_SERVER)).build()
+        )
         .documents(
             naverBlogSearchApiRes.getItems().stream()
                 .map(BlogSearchMapper.INSTANCE::mapNaverToDocument)

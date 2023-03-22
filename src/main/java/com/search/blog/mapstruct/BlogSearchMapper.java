@@ -16,11 +16,6 @@ public interface BlogSearchMapper {
 
   BlogSearchMapper INSTANCE = Mappers.getMapper(BlogSearchMapper.class);
 
-//  @Mapping(source = "query", target = "keyword")
-//  BlogSearchHistoryEntity toBlogSearchHistoryEntity(BlogSearchGetReq blogSearchGetReq)
-
-  // KakaoBlogSearchApiRes -> BlogSearchWebRes
-
   KeywordInfo toKeyTenKeyWord(BlogSearchHistoryEntity historyEntity);
 
 

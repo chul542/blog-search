@@ -57,6 +57,8 @@ public class BlogSearchWebDto {
 
     private Boolean is_end;
 
+    private String search_source;
+
     public static BlogSearchMeta of(KakaoBlogSearchApiResMeta meta) {
       return BlogSearchMapper.INSTANCE.mapToMeta(meta);
     }
@@ -91,13 +93,13 @@ public class BlogSearchWebDto {
 
   @Getter
   @Builder
-  public static class TopTenKeywordRes {
+  public static class PopularKeywordRes {
 
     private Boolean hasMore;
 
     private List<KeywordInfo> keywordList;
 
-    public static TopTenKeywordRes of(Slice<BlogSearchHistoryEntity> keywordList) {
+    public static PopularKeywordRes of(Slice<BlogSearchHistoryEntity> keywordList) {
       int size = keywordList.getSize();
       ListIterator<BlogSearchHistoryEntity> it = keywordList.getContent().listIterator(size);
       List<KeywordInfo> reversedList = Stream.generate(it::previous)
@@ -105,7 +107,7 @@ public class BlogSearchWebDto {
           .map(KeywordInfo::of)
           .collect(Collectors.toList());
       Collections.reverse(reversedList);
-      return TopTenKeywordRes.builder()
+      return PopularKeywordRes.builder()
           .hasMore(keywordList.hasNext())
           .keywordList(
               reversedList
