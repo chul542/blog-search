@@ -8,4 +8,10 @@ public class MvcConfig implements WebMvcConfigurer {
 
   public static final String BLOG_SEARCH_URI = "/v1/search/blog";
 
+  public static final String AUTHORIZATION = "Authorization";
+
+  public static final String X_NAVER_CLIENT_ID = "X-Naver-Client-Id";
+
+  public static final String X_NAVER_CLINET_SECRET = "X-Naver-Client-Secret";
+
 }

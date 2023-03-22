@@ -14,21 +14,23 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.projectlombok:lombok:1.18.20'
+    implementation 'junit:junit:4.13.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // h2 database
     runtimeOnly 'com.h2database:h2'
 
-    //jpa
+    // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation("com.vladmihalcea:hibernate-types-52:2.21.1")
-    //web
+    // web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     // log4j
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
-    //lombok
+    // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
@@ -39,14 +41,19 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
-    //WebClient
+    // WebClient
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-    //Validater
+    // Validater
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
 
-    //Swagger
+    // Swagger
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+    // Mokito for Test
+    testImplementation 'org.mockito:mockito-core:4.8.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.8.0'
+    implementation 'com.google.code.gson:gson:2.9.0'
 
 }
 

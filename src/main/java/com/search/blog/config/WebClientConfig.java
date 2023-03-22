@@ -3,13 +3,12 @@ package com.search.blog.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-public class WebClintConfig {
+public class WebClientConfig {
 
   @Value("${api-server.kakao-api-server-url}")
   private String KAKAO_API_SERVER;

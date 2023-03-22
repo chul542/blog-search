@@ -1,5 +1,9 @@
 package com.search.blog.service;
 
+import static com.search.blog.config.MvcConfig.AUTHORIZATION;
+import static com.search.blog.config.MvcConfig.X_NAVER_CLIENT_ID;
+import static com.search.blog.config.MvcConfig.X_NAVER_CLINET_SECRET;
+
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchDocument;
 import com.search.blog.dto.web.BlogSearchWebDto.BlogSearchMeta;
 import com.search.blog.dto.web.KakaoBlogSearchApiDto.KakaoBlogSearchApiReq;
@@ -10,6 +14,8 @@ import com.search.blog.dto.web.NaverBlogSearchApiDto.NaverBlogSearchApiRes;
 import com.search.blog.exception.custom.PageLimitException;
 import com.search.blog.mapstruct.BlogSearchMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,6 +23,15 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 @RequiredArgsConstructor
 public class ApiCallServiceImpl implements ApiCallService {
+
+  @Value("${secrets.kakao-rest-api-key}")
+  private String KAKAO_REST_API_KEY;
+
+  @Value("${secrets.x-naver-client-id-key}")
+  private String X_NAVER_CLINET_ID_KEY;
+
+  @Value("${secrets.x-naver-client-secret-key}")
+  private String X_NAVER_CLINET_SECRET_KEY;
 
   private final WebClient webClientToKakaoApiServer;
   private final WebClient webClientToNaverApiServer;
@@ -32,11 +47,8 @@ public class ApiCallServiceImpl implements ApiCallService {
             .queryParam("size", kakaoBlogSearchApiReq.getSize())
             .build()
         )
-        .header("Authorization", "KakaoAK b59375d0e881ccac07d04996b2496fd3")
+        .header(AUTHORIZATION, KAKAO_REST_API_KEY)
         .retrieve()
-        .onStatus(HttpStatus::is4xxClientError, clientResponse -> {
-          throw new PageLimitException();
-        })
         .bodyToMono(KakaoBlogSearchApiRes.class)
         .block();
 
@@ -68,8 +80,8 @@ public class ApiCallServiceImpl implements ApiCallService {
             .queryParam("sort", naverBlogSearchApiReq.getSort())
             .build()
         )
-        .header("X-Naver-Client-Id", "rNyjEScrdlU5n8Y_QnBR")
-        .header("X-Naver-Client-Secret", "QblzCaOKNz")
+        .header(X_NAVER_CLIENT_ID, X_NAVER_CLINET_ID_KEY)
+        .header(X_NAVER_CLINET_SECRET, X_NAVER_CLINET_SECRET_KEY)
         .retrieve()
         .onStatus(HttpStatus::is4xxClientError, clientResponse -> {
           throw new PageLimitException();
