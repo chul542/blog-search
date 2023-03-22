@@ -71,7 +71,7 @@ public class BlogSearchController {
       + " it will return all available keywords.")
   @GetMapping(path = "/popular-keyword")
   public PopularKeywordRes getPopularKeword(
-      @RequestParam(value = "size", required = false, defaultValue = "10") @Min(1) @Max(20) int size
+      @RequestParam(value = "size", required = false, defaultValue = "10") int size
   ) {
     return blogSearchService.getPopularKeywordList(size);
   }
